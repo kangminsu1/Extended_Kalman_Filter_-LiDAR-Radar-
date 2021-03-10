@@ -4,14 +4,14 @@ In this project, we have to create Extended Kalman Filter using C++ and use it t
 
 This project involves [Udacity Self-Driving Car Engineer Nanodegree Term 2 Simulator](https://github.com/udacity/self-driving-car-sim/releases)
 
-##Prerequisites
+## Prerequisites
 ####The project has the following dependencies:
 * cmake = 3.16.3
 * make = 4.2.1
 * g++ = 9.3.0
 * [uWebSocketIO](https://github.com/uWebSockets/uWebSockets) and [implementation method](https://github.com/udacity/CarND-Path-Planning-Project/blob/master/install-ubuntu.sh)
 
-##Build and Run
+## Build and Run
 Before Start this project, you should Create "build" folder and right this comments in terminal.
 
 ```bash
@@ -26,19 +26,19 @@ After that, Start the Term 2 Simulator
 $> cd term2_sim_linux
 $> ./term2_sim.x86_64
 ```
-##Demo
-###Dataset [1]
+## Demo
+### Dataset [1]
 [*zoom in*]
 ![ZOOM_IN](result_data/Dataset1_zoom_in.gif)
 [*zoom out*]
 ![ZOOM_IN](result_data/Dataset1_zoom_out.gif)
-###Dataset [2]
+### Dataset [2]
 [*zoom in*]
 ![ZOOM_IN](result_data/Dataset2_zoom_in.gif)
 [*zoom out*]
 ![ZOOM_IN](result_data/Dataset2_zoom_out.gif)
 
-###Protocol
+### Protocol
 The following are the default protocols that main.cpp uses for uWebSocketIO: This uWebSocketIO is used to communicate with the simulator.
 
 [**INPUT**]
