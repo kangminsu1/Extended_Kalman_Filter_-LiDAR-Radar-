@@ -4,13 +4,14 @@ using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
 
-KalmanFilter::KalmanFilter() = default;
+KalmanFilter::KalmanFilter() = default; // 생성자 (객체 생성시 호출)
 
-KalmanFilter::~KalmanFilter() = default;
+KalmanFilter::~KalmanFilter() = default; // 소멸자 (객체 소멸시 호출, 메모리 해제)
 
 MatrixXd KalmanFilter::I_ = MatrixXd::Identity(4, 4);
 Tools KalmanFilter::tools_ = Tools();
 
+// 초기 설정 
 void KalmanFilter::Init(VectorXd &x_in,       MatrixXd &P_in,       MatrixXd &F_in, MatrixXd &H_in,
 		MatrixXd &R_lidar_in, MatrixXd &R_radar_in, MatrixXd &Q_in) {
 	x_       = x_in;
