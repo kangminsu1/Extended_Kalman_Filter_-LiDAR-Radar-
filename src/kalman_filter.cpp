@@ -13,7 +13,7 @@ Tools KalmanFilter::tools_ = Tools();
 
 // 초기 설정 
 void KalmanFilter::Init(VectorXd &x_in,       MatrixXd &P_in,       MatrixXd &F_in, MatrixXd &H_in,
-		MatrixXd &noisy_, MatrixXd &Q_in) {
+		MatrixXd &noisy, MatrixXd &Q_in) {
 	x_       = x_in;
 	P_       = P_in;
 	F_       = F_in;
