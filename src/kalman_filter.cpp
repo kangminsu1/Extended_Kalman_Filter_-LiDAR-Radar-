@@ -24,52 +24,27 @@ void KalmanFilter::Init(VectorXd &x_in,       MatrixXd &P_in,       MatrixXd &F_
 
 // 센서에서 수신된 State Vector 예측 부
 void KalmanFilter::Predict() {
-	x_ = F_ * x_; // u is zero vector; omitted for optimization purposes
+	x_ = F_ * x_;
 	MatrixXd Ft = F_.transpose();
 	P_ = F_ * P_ * Ft + Q_;
 }
 
 // 센서에서 수신된 State Vector 업데이트 부
 void KalmanFilter::Update(const VectorXd &z) {
-	UpdateCommon(z, H_, R_lidar_, false);
+	UpdateCommon(z, H_, R_lidar_);
 }
 
-# 
-void KalmanFilter::UpdateEKF(const VectorXd &z) {
-	MatrixXd Hj = tools_.CalculateJacobian(x_);
+void KalmanFilter::UpdateCommon(const VectorXd &z, const MatrixXd &H, const MatrixXd &R) {
+	VectorXd y; 
+	
+	y = z - H * x_; // 측정치 - (H + State vector)
 
-	UpdateCommon(z, Hj, R_radar_, true);
-}
+	MatrixXd Ht = H.transpose(); // Residual Data
+	MatrixXd S = H * P_ * Ht + R; // HPH^T + 시스템 노이즈
+	MatrixXd Si = S.inverse(); // Residual Data (Cov)
+	MatrixXd K =  P_ * Ht * Si; // Kalman Gain
 
-void KalmanFilter::UpdateCommon(const VectorXd &z, const MatrixXd &H, const MatrixXd &R, bool is_ekf) {
-	VectorXd y;
-
-	if (is_ekf) {
-		// using equations for extended kalman filter
-
-		// convert radar measurements from cartesian coordinates (x, y, vx, vy) to polar (rho, phi, rho_dot).
-		VectorXd x_polar = tools_.ConvertFromCartesianToPolarCoords(x_);
-		y = z - x_polar;
-
-		// normalize the angle between -pi to pi
-		while(y(1) > M_PI){
-			y(1) -= 2 * M_PI;
-		}
-
-		while(y(1) < -M_PI){
-			y(1) += 2 * M_PI;
-		}
-	} else {
-		// using equations for kalman filter
-		y = z - H * x_;
-	}
-
-	MatrixXd Ht = H.transpose();
-	MatrixXd S = H * P_ * Ht + R;
-	MatrixXd Si = S.inverse();
-	MatrixXd K =  P_ * Ht * Si;
-
-	// new state
+	// new state (t + 1)
 	x_ = x_ + (K * y);
 	P_ = (I_ - K * H) * P_;
 }
