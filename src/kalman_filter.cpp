@@ -22,16 +22,19 @@ void KalmanFilter::Init(VectorXd &x_in,       MatrixXd &P_in,       MatrixXd &F_
 	Q_       = Q_in;
 }
 
+// 센서에서 수신된 State Vector 예측 부
 void KalmanFilter::Predict() {
 	x_ = F_ * x_; // u is zero vector; omitted for optimization purposes
 	MatrixXd Ft = F_.transpose();
 	P_ = F_ * P_ * Ft + Q_;
 }
 
+// 센서에서 수신된 State Vector 업데이트 부
 void KalmanFilter::Update(const VectorXd &z) {
 	UpdateCommon(z, H_, R_lidar_, false);
 }
 
+# 
 void KalmanFilter::UpdateEKF(const VectorXd &z) {
 	MatrixXd Hj = tools_.CalculateJacobian(x_);
 
