@@ -34,6 +34,7 @@ void KalmanFilter::Update(const VectorXd &z) {
 	UpdateCommon(z, H_, R_lidar_);
 }
 
+// 업데이트 부 (상세)
 void KalmanFilter::UpdateCommon(const VectorXd &z, const MatrixXd &H, const MatrixXd &R) {
 	VectorXd y; 
 	
