@@ -13,13 +13,12 @@ Tools KalmanFilter::tools_ = Tools();
 
 // 초기 설정 
 void KalmanFilter::Init(VectorXd &x_in,       MatrixXd &P_in,       MatrixXd &F_in, MatrixXd &H_in,
-		MatrixXd &R_lidar_in, MatrixXd &R_radar_in, MatrixXd &Q_in) {
+		MatrixXd &noisy_, MatrixXd &Q_in) {
 	x_       = x_in;
 	P_       = P_in;
 	F_       = F_in;
 	H_       = H_in;
-	R_lidar_ = R_lidar_in;
-	R_radar_ = R_radar_in;
+	noisy_ = noisy;
 	Q_       = Q_in;
 }
 
@@ -32,7 +31,7 @@ void KalmanFilter::Predict() {
 
 // 센서에서 수신된 State Vector 업데이트 부
 void KalmanFilter::Update(const VectorXd &z) {
-	UpdateCommon(z, H_, R_lidar_);
+	UpdateCommon(z, H_, noisy_);
 }
 
 // 업데이트 부 (상세)
